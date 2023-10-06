@@ -1353,12 +1353,6 @@ endif
 endif
 
 ifneq ($(CONFIG_TEGRA),)
-ifneq ($(CONFIG_BINMAN),)
-# Makes u-boot-dtb-tegra.bin u-boot-tegra.bin u-boot-nodtb-tegra.bin
-%-dtb-tegra.bin %-tegra.bin %-nodtb-tegra.bin: \
-		spl/%-spl %.bin FORCE
-	$(call if_changed,binman)
-else
 OBJCOPYFLAGS_u-boot-nodtb-tegra.bin = -O binary --pad-to=$(CONFIG_SYS_TEXT_BASE)
 u-boot-nodtb-tegra.bin: spl/u-boot-spl u-boot-nodtb.bin FORCE
 	$(call if_changed,pad_cat)
@@ -1369,7 +1363,6 @@ u-boot-tegra.bin: spl/u-boot-spl u-boot.bin FORCE
 
 u-boot-dtb-tegra.bin: u-boot-tegra.bin FORCE
 	$(call if_changed,copy)
-endif  # binman
 endif
 
 OBJCOPYFLAGS_u-boot-app.efi := $(OBJCOPYFLAGS_EFI)

@@ -22,7 +22,6 @@ config TEGRA_IVC
 
 config TEGRA_COMMON
 	bool "Tegra common options"
-	select BINMAN
 	select BOARD_EARLY_INIT_F
 	select CLK
 	select DM
