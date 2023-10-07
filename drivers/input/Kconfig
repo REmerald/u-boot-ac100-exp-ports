@@ -73,6 +73,12 @@ config I8042_KEYB
 	  variable 'keymap' to "de" to select German. Keyboard repeat is
 	  handled by the keyboard itself.
 
+config TEGRA_NVEC_KEYBOARD
+	bool "Enable NVEC keyboard"
+	depends on TEGRA_NVEC
+	help
+	  This adds NVEC keyboard driver.
+
 config TEGRA_KEYBOARD
 	bool "NVIDIA Tegra internal matrix keyboard controller support"
 	help
