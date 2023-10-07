@@ -64,12 +64,12 @@ int ext4fs_read_file(struct ext2fs_node *node, loff_t pos,
 	char *start_buf = buf;
 	short status;
 
-	if (blocksize <= 0)
-		return -1;
-
 	/* Adjust len so it we can't read past the end of the file. */
 	if (len + pos > filesize)
 		len = (filesize - pos);
+
+	if (blocksize <= 0 || len <= 0)
+		return -1;
 
 	blockcnt = lldiv(((len + pos) + blocksize - 1), blocksize);
 
