@@ -16,6 +16,7 @@
 #ifndef HOST_XHCI_H_
 #define HOST_XHCI_H_
 
+#include <usb.h>
 #include <asm/types.h>
 #include <asm/cache.h>
 #include <asm/io.h>
@@ -1111,28 +1112,20 @@ static inline void xhci_writel(uint32_t volatile *regs, const unsigned int val)
  */
 static inline u64 xhci_readq(__le64 volatile *regs)
 {
-#if BITS_PER_LONG == 64
-	return readq(regs);
-#else
 	__u32 *ptr = (__u32 *)regs;
 	u64 val_lo = readl(ptr);
 	u64 val_hi = readl(ptr + 1);
 	return val_lo + (val_hi << 32);
-#endif
 }
 
 static inline void xhci_writeq(__le64 volatile *regs, const u64 val)
 {
-#if BITS_PER_LONG == 64
-	writeq(val, regs);
-#else
 	__u32 *ptr = (__u32 *)regs;
 	u32 val_lo = lower_32_bits(val);
 	/* FIXME */
 	u32 val_hi = upper_32_bits(val);
 	writel(val_lo, ptr);
 	writel(val_hi, ptr + 1);
-#endif
 }
 
 int xhci_hcd_init(int index, struct xhci_hccr **ret_hccr,
@@ -1288,5 +1281,7 @@ int xhci_register(struct udevice *dev, struct xhci_hccr *hccr,
 extern struct dm_usb_ops xhci_usb_ops;
 
 struct xhci_ctrl *xhci_get_ctrl(struct usb_device *udev);
+
+extern void xhci_pci_fixup(struct udevice *dev);
 
 #endif /* HOST_XHCI_H_ */
