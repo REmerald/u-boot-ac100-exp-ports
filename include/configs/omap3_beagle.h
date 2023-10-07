@@ -91,7 +91,6 @@
 #define BOOT_TARGET_DEVICES(func) \
 	func(MMC, mmc, 0) \
 	func(LEGACY_MMC, legacy_mmc, 0) \
-	func(UBIFS, ubifs, 0) \
 	func(NAND, nand, 0)
 
 #else /* !CONFIG_NAND */
